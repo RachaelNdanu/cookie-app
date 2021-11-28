@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment</title>
+</head>
+<body>
+    <!--element to display welcome message-->
+    <div>
+        <p>Welcome <span style="color:chartreuse;" id="name"></span>, last date of visit <span style="color:blueviolet;" id="day"></span> </p>
+    </div>
+
+    <!--form to enter user details-->
+    
+    <div>
+        <input type="text" placeholder="What is your name" id="myInput">
+        <button type="button" onclick="getInputValue();">Save</button>
+    </div>
+
+    <script>
+
+        (function() {
+            checkCookie()
+        })();
+
+        function getInputValue(){
+            // Selecting the input element and get its value 
+            var inputVal = document.getElementById("myInput").value;
+       
+            setCookie('assignment', inputVal, 3);
+           // set last date of visit as a cookie
+           setCookie('last_date', new Date(),3);
+        }
+
+
+        function setCookie(cname, value, expiredays)
+                {
+                const d = new Date();
+                d.setTime(d.getTime() + (expiredays * 24 * 60 * 60 * 1000));
+                let expires = "expires="+d.toUTCString();
+                document.cookie= cname + "=" + escape(value)+";" + "expires;";
+            }
+
+            function getCookie(cname) {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for(let i = 0; i <ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+                }
+                
+            function checkCookie() {
+                let user = getCookie("assignment");
+                let day = getCookie('last_date');
+                
+                if (user != "") {
+                    document.getElementById('name').innerHTML=user;
+                    document.getElementById('day').innerHTML=day;
+                } 
+                } 
+
+    </script>
+</body>
+</html>
